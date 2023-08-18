@@ -3,7 +3,7 @@ if(isset($equipe))
 {
         $nomEquipe = $equipe["nom"];
         $villeEquipe = $equipe["ville"];
-   
+    
 ?>
 <h1>Liste des joueurs de l'équipe <?= $nomEquipe ?> de <?= $villeEquipe ?></h1>
 <?php
@@ -19,11 +19,12 @@ else
 <?php 
     while($rangee = mysqli_fetch_assoc($joueurs))
     {
-       ?> 
-       <li>
-            <?= $rangee["prenom"] ?> <?= $rangee["nom"] ?>
-       </li>
-       <?php 
+        ?> 
+        <li>
+            <a href="index.php?commande=FormModifieJoueur&idJoueur=<?= $rangee["id"] ?>" > <?= $rangee["prenom"] ?> <?= $rangee["nom"] ?> </a>
+        
+        </li>
+        <?php 
     }
 ?>
 </ul>

@@ -3,19 +3,19 @@
 <?php 
     while($rangee = mysqli_fetch_assoc($equipes))
     {
-       ?> 
-       <li>
-        <a href='index.php?commande=ListeJoueursParEquipe&idEquipe=<?= $rangee["id"] ?>'>
-            <?= htmlspecialchars($rangee["nom"]) ?> de <?= htmlspecialchars($rangee["ville"])?>
-        </a>
-        <a href='index.php?commande=SupprimeEquipe&idEquipe=<?= $rangee["id"] ?>'>
-            Supprimer cette équipe
-        </a>
-        <a href='index.php?commande=FormModifieEquipe&idEquipe=<?= $rangee["id"] ?>'>
-            Modifier cette équipe
-        </a>
-        </li>
-       <?php 
+        ?> 
+        <li>
+            <a href='index.php?commande=ListeJoueursParEquipe&idEquipe=<?= $rangee["id"] ?>'>
+                <?= htmlspecialchars($rangee["nom"]) ?> de <?= htmlspecialchars($rangee["ville"])?>
+            </a>
+            <a href='index.php?commande=SupprimeEquipe&idEquipe=<?= $rangee["id"] ?>'>
+                Supprimer cette équipe
+            </a>
+            <a href='index.php?commande=FormModifieEquipe&idEquipe=<?= $rangee["id"] ?>'>
+                Modifier cette équipe
+            </a>
+            </li>
+        <?php 
     }
 ?>
 </ul>

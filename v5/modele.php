@@ -73,6 +73,21 @@
         return $resultats;
     }
 
+    function obtenir_joueurs_par_ID($id_joueur)
+    {
+        global $connexion;
+
+        //avant de continuer on teste la requête dans PHPMYADMIN
+        $requete = "SELECT id, prenom, joueur.nom, nb_buts, nb_passes, id_equipe  FROM joueur WHERE id = " . $id_joueur ;
+
+        //exécuter la requête avec mysqli_query 
+        $resultats = mysqli_query($connexion, $requete);
+
+        $rangee = mysqli_fetch_assoc($resultats);
+
+        return $rangee;
+    }
+
     function obtenir_equipe_par_ID($id_equipe)
     {
         global $connexion;

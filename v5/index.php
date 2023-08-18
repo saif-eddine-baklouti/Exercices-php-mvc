@@ -223,6 +223,29 @@
                 die();
             }
             break;
+        case "FormModifieJoueur":
+            if(!isset($_REQUEST["idJoueur"]) || !is_numeric($_REQUEST["idJoueur"]))
+            {
+                header("Location: index.php");
+                die();
+            }
+            
+            $titre = "Formulaire de modification d'une équipe";
+            $joueur = obtenir_joueur_par_ID($_REQUEST["idJoueur"]);
+                
+            //est-ce que l'équipe possédant cet ID existe
+            if($joueur != false)
+            {
+                require_once("vues/header.php");
+                require("vues/form_modifie_joueur.php");
+                require_once("vues/footer.php");
+            }
+            else 
+            {
+                header("Location: index.php");
+                die();
+            } 
+            break;
         default: 
             $titre = "Erreur 404";
             //erreur 404, commande introuvable

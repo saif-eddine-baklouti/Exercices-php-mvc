@@ -1,0 +1,24 @@
+Exercice : 
+
+À partir de la base de données Ligue fournie et du début d'application fourni :
+
+a) Créer le formulaire de modification de joueur, permettant de modifier un joueur en spécifiant l'équipe pour laquelle il joue à l'aide d'un select. Ce formulaire doit être populé avec les valeurs existantes dans la BD lors de l'arrivée sur le formulaire.
+
+Il faudra protéger ce formulaire contre les attaques par injection en utilisant les requêtes préparées!
+Il faudra aussi se protéger contre les attaques XSS.
+
+b) Créer le formulaire de recherche permettant de trouver un joueur par son prénom et / ou son nom. 
+Le résultat affichera tous les joueurs possédant un nom ou un prénom similaire à celui entré, 
+ainsi que la ville et l'équipe de ces joueurs. Cette requête doit aussi être préparée!
+Et... elle nécessite une jointure...
+
+c) Ajouter la fonctionnalité de tri dans votre liste d'équipes pour trier les équipes 
+par nom ou par ville.  
+
+La navigation doit aussi être intégrée dans votre mini-site de gestion des joueurs de la ligue 
+(je dois pouvoir naviguer vers toutes vos pages à l'aide de liens). 
+
+Vous DEVEZ ABSOLUMENT IMPÉRATIVEMENT SANS AUCUN DOUTE
+utiliser la structure vue dans ce cours - MVCModulaire.
+
+LE SQL DANS LES AUTRES PAGES QUE LE MODÈLE NE SERA PAS ACCEPTÉ!
