@@ -52,6 +52,12 @@
     $test = supprime_equipe($idEquipe);
     var_dump($test);
 ?>    
+<h1>Test de modifie_joueur($id)</h1>
+<?php 
+
+    $test = modifie_joueur("saif","baklouti", 55, 22, 11, 2);
+    var_dump($test);
+?>    
 </body>
 </html>
 

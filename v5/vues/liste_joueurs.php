@@ -21,8 +21,8 @@ else
     {
         ?> 
         <li>
-            <a href="index.php?commande=FormModifieJoueur&idJoueur=<?= $rangee["id"] ?>" > <?= $rangee["prenom"] ?> <?= $rangee["nom"] ?> </a>
-        
+            <?= $rangee["prenom"] ?> <?= $rangee["nom"] ?> 
+            <a href="index.php?commande=FormModifieJoueur&idJoueur=<?= $rangee["id"] ?>"> Modifier ce joueur </a>
         </li>
         <?php 
     }

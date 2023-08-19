@@ -1,14 +1,23 @@
-<h1>Formulaire de modification d'une équipe</h1>
+<h1>Formulaire de modification d'un joueur</h1>
 <form method="POST" action="index.php">
+    Prenom : <input type="text" name="prenom" value="<?= $joueur["prenom"]; ?>"/><br>
     Nom : <input type="text" name="nom" value="<?= $joueur["nom"]; ?>"/><br>
-    Ville : <input type="text" name="ville" value="<?= $joueur["ville"]; ?>"/><br>
     Nombre de buts : <input type="number" name="nb_buts" value="<?= $joueur["nb_buts"]; ?>"/><br>
     Nombre de passes : <input type="number" name="nb_passes" value="<?= $joueur["nb_passes"]; ?>"/><br>
+    Équipe : <select name="id_equipe">
+    <?php 
+        while($rangee = mysqli_fetch_assoc($equipes))
+        {
+            if($joueur["id_equipe"] == $rangee["id"])
+                echo "<option selected value='" . $joueur["id_equipe"] . "'>" . htmlspecialchars($joueur["nomEquipe"]) . " de " . htmlspecialchars($joueur["ville"]) . "</option>";
+            else 
+                echo "<option value='" . $rangee["id"] . "'>" . htmlspecialchars($rangee["nom"]) . " de " . htmlspecialchars($rangee["ville"]) . "</option>";
+        }
+    ?>
+    
     <input type="hidden" name="commande" value="ModifieJoueur"/>
-    <input type="hidden" name="id" value="<?= $joueur["id"]; ?>"/>
+    <input type="hidden" name="id" value="<?= $joueur["idJoueur"]; ?>"/></br>
     <input type="submit" value="Modifier"/>
     <a href='index.php'>Retourner à l'accueil</a>
-    <a href='index.php?commande=FormModifieJoueur&idJoueur=<?= $joueur["id"] ?>'>
-                Modifier ce joueur
-            </a>
+    
 </form>

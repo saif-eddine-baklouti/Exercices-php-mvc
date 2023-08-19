@@ -73,12 +73,12 @@
         return $resultats;
     }
 
-    function obtenir_joueurs_par_ID($id_joueur)
+    function obtenir_joueur_equipe_par_joueur_ID($id_joueur)
     {
         global $connexion;
 
         //avant de continuer on teste la requête dans PHPMYADMIN
-        $requete = "SELECT id, prenom, joueur.nom, nb_buts, nb_passes, id_equipe  FROM joueur WHERE id = " . $id_joueur ;
+        $requete = "SELECT joueur.id AS idJoueur, prenom, joueur.nom, nb_buts, nb_passes, id_equipe, equipe.nom AS nomEquipe, ville FROM joueur JOIN equipe ON id_equipe = equipe.id WHERE joueur.id = ".$id_joueur ;
 
         //exécuter la requête avec mysqli_query 
         $resultats = mysqli_query($connexion, $requete);
@@ -173,9 +173,9 @@
         $requete = "UPDATE equipe SET nom='$nom', ville = '$ville', nb_victoires = $nb_victoires WHERE id = $id";
         //exécuter la requête avec mysqli_query 
         $test = mysqli_query($connexion, $requete);
-      
+        
         return $test;
-     
+        
     }
 
     function supprime_equipe($id)
@@ -192,4 +192,17 @@
 
     }
     
+    function modifie_joueur($id, $prenom, $nom, $nb_buts, $nb_passes, $id_equipe)
+    {
+        global $connexion;
+
+        //avant de continuer on teste la requête dans PHPMYADMIN
+        // $requete = "UPDATE joueur SET prenom=?, nom=?, nb_buts=?, nb_passes =?, id_equipe=?  WHERE ID=?";
+        $requete = "UPDATE joueur SET prenom='$prenom', nom='$nom', nb_buts=$nb_buts, nb_passes =$nb_passes, id_equipe=$id_equipe  WHERE ID=$id";
+        //exécuter la requête avec mysqli_query 
+        $test = mysqli_query($connexion, $requete);
+        
+        return $test;
+        
+    }
 ?>
