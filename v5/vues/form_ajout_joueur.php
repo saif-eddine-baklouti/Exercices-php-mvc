@@ -6,19 +6,19 @@
     $id_equipe = "";
 
     if(isset($_REQUEST["prenom"]))
-        $prenom = $_REQUEST["prenom"];
+        $prenom = htmlspecialchars($_REQUEST["prenom"]);
 
     if(isset($_REQUEST["nom"]))
-        $nom = $_REQUEST["nom"];
+        $nom = htmlspecialchars($_REQUEST["nom"]);
 
     if(isset($_REQUEST["nb_buts"]))
-        $nb_buts = $_REQUEST["nb_buts"];
+        $nb_buts = htmlspecialchars($_REQUEST["nb_buts"]);
 
     if(isset($_REQUEST["nb_passes"]))
-        $nb_passes = $_REQUEST["nb_passes"];
+        $nb_passes = htmlspecialchars($_REQUEST["nb_passes"]);
 
     if(isset($_REQUEST["id_equipe"]))
-        $id_equipe = $_REQUEST["id_equipe"];
+        $id_equipe = htmlspecialchars($_REQUEST["id_equipe"]);
 
 ?>
 <h1>Formulaire d'ajout d'un joueur</h1>

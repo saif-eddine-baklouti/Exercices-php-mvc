@@ -6,7 +6,7 @@
         ?> 
         <li>
             <a href='index.php?commande=ListeJoueursParEquipe&idEquipe=<?= $rangee["id"] ?>'>
-                <?= htmlspecialchars($rangee["nom"]) ?> de <?= htmlspecialchars($rangee["ville"])?>
+                <?= $rangee["nom"] ?> de <?= $rangee["ville"]?>
             </a>
             <a href='index.php?commande=SupprimeEquipe&idEquipe=<?= $rangee["id"] ?>'>
                 Supprimer cette équipe

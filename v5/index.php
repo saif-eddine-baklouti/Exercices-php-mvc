@@ -86,7 +86,7 @@
                 if(valide_equipe($_REQUEST["nom"], $_REQUEST["ville"], $_REQUEST["nb_victoires"]))
                 {
                     //insérer
-                    $test = insere_equipe($_REQUEST["nom"], $_REQUEST["ville"], $_REQUEST["nb_victoires"]);
+                    $test = insere_equipe(htmlspecialchars($_REQUEST["nom"]), htmlspecialchars($_REQUEST["ville"]), htmlspecialchars($_REQUEST["nb_victoires"]));
                     if($test !== false)
                     {
                         //l'ajout a fonctionné
@@ -164,7 +164,7 @@
             {
                 if(valide_equipe($_REQUEST["nom"], $_REQUEST["ville"], $_REQUEST["nb_victoires"]))
                 {
-                    $test = modifie_equipe($_REQUEST["nom"], $_REQUEST["ville"], $_REQUEST["nb_victoires"], $_REQUEST["id"]);
+                    $test = modifie_equipe(htmlspecialchars($_REQUEST["nom"]), htmlspecialchars($_REQUEST["ville"]), htmlspecialchars($_REQUEST["nb_victoires"]), htmlspecialchars($_REQUEST["id"]));
                     if($test)
                         header("Location: index.php?commande=ListeEquipes&message=Modification réussie.");
                     else
@@ -196,7 +196,7 @@
                 if(valide_joueur($_REQUEST["prenom"], $_REQUEST["nom"], $_REQUEST["nb_buts"], $_REQUEST["nb_passes"], $_REQUEST["id_equipe"]))
                 {
                     //insérer
-                    $test = insere_joueur($_REQUEST["prenom"], $_REQUEST["nom"], $_REQUEST["nb_buts"], $_REQUEST["nb_passes"], $_REQUEST["id_equipe"]);
+                    $test = insere_joueur(htmlspecialchars($_REQUEST["prenom"]), htmlspecialchars($_REQUEST["nom"]), htmlspecialchars($_REQUEST["nb_buts"]), htmlspecialchars($_REQUEST["nb_passes"]), htmlspecialchars($_REQUEST["id_equipe"]));
                     if($test !== false)
                     {
                         //l'ajout a fonctionné
@@ -258,7 +258,7 @@
                 if(valide_joueur($_REQUEST["prenom"], $_REQUEST["nom"], $_REQUEST["nb_buts"], $_REQUEST["nb_passes"], $_REQUEST["id_equipe"]))
                 {
                     
-                    $test = modifie_joueur($_REQUEST["id"], $_REQUEST["prenom"], $_REQUEST["nom"], $_REQUEST["nb_buts"], $_REQUEST["nb_passes"], $_REQUEST["id_equipe"]);
+                    $test = modifie_joueur(htmlspecialchars($_REQUEST["id"]), htmlspecialchars($_REQUEST["prenom"]), htmlspecialchars($_REQUEST["nom"]), htmlspecialchars($_REQUEST["nb_buts"]), htmlspecialchars($_REQUEST["nb_passes"]), htmlspecialchars($_REQUEST["id_equipe"]));
                     if($test)
                         header("Location: index.php?commande=ListeJoueursParEquipe&idEquipe=".$_REQUEST["id_equipe"]."&message=Modification réussie.");
                     else
@@ -276,6 +276,30 @@
                 die();
             } 
             break;
+        case "FormRechercheJoueurs":
+            $titre = "formulaire de recherche des joueurs";
+
+            require_once("vues/header.php");
+            require("vues/form_recherche_joueurs.php");
+            require_once("vues/footer.php");
+            break;
+        case "RechercheJoueurs":
+            if (!isset($_REQUEST["recherche"])) {
+                require_once("vues/header.php");
+                require("vues/form_recherche_joueurs.php");
+                require_once("vues/footer.php");
+            }
+            else 
+            {
+                $resultatsRecherche = recherhce_joueurs($_REQUEST["recherche"]);
+                require_once("vues/header.php");
+                require("vues/form_recherche_joueurs.php");
+                require("vues/resultats_recherche_joueurs.php");
+                require_once("vues/footer.php");
+            }
+            break;    
+            
+            
         default: 
             $titre = "Erreur 404";
             //erreur 404, commande introuvable

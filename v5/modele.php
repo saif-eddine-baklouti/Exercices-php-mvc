@@ -197,12 +197,66 @@
         global $connexion;
 
         //avant de continuer on teste la requête dans PHPMYADMIN
-        // $requete = "UPDATE joueur SET prenom=?, nom=?, nb_buts=?, nb_passes =?, id_equipe=?  WHERE ID=?";
-        $requete = "UPDATE joueur SET prenom='$prenom', nom='$nom', nb_buts=$nb_buts, nb_passes =$nb_passes, id_equipe=$id_equipe  WHERE ID=$id";
+        $requete = "UPDATE joueur SET prenom=?, nom=?, nb_buts=?, nb_passes =?, id_equipe=?  WHERE ID=?";
+        // $requete = "UPDATE joueur SET prenom='$prenom', nom='$nom', nb_buts=$nb_buts, nb_passes =$nb_passes, id_equipe=$id_equipe  WHERE ID=$id";
+        
+        //2. préparer la requête
+        $reqPrep = mysqli_prepare($connexion, $requete);
+
+        //3. est-ce que la requête préparée est valide
+        if($reqPrep)
+        {
+            //4. faire le lien entre les paramètres (?) et les valeurs envoyées
+            mysqli_stmt_bind_param($reqPrep, "ssiiii", $prenom, $nom, $nb_buts, $nb_passes, $id_equipe,$id);
+
+            //5. exécuter la requête préparée
+            $test = mysqli_stmt_execute($reqPrep);
+
+            if($test)
+            {
+                $id = mysqli_insert_id($connexion);
+                return $id;
+            }
+            else 
+                return false;
+        }
+        else 
+            die("Erreur mysqli.");
         //exécuter la requête avec mysqli_query 
         $test = mysqli_query($connexion, $requete);
         
         return $test;
         
+    }
+    function recherhce_joueurs($aChercher) {
+        
+        global $connexion;
+
+        $requete = "SELECT prenom, joueur.nom AS nomJoueur, ville, equipe.nom AS nomEquipe FROM joueur JOIN equipe ON id_equipe = equipe.id WHERE CONCAT(prenom ,'',joueur.nom)  LIKE '%?%' ";
+
+        $reqPrep = mysqli_prepare($connexion, $requete);
+
+        if($reqPrep)
+        {
+            //4. faire le lien entre les paramètres (?) et les valeurs envoyées
+            mysqli_stmt_bind_param($reqPrep, "s", $aChercher);
+
+            //5. exécuter la requête préparée
+            $test = mysqli_stmt_execute($reqPrep);
+
+            if($test)
+            {
+                
+                return $test;
+            }
+            else 
+                return false;
+        }
+        else 
+            die("Erreur mysqli.");
+        //exécuter la requête avec mysqli_query 
+        $resultats = mysqli_query($connexion, $requete);
+        
+        return $resultats;
     }
 ?>

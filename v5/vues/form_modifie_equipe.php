@@ -6,4 +6,5 @@
     <input type="hidden" name="commande" value="ModifieEquipe"/>
     <input type="hidden" name="id" value="<?= $equipe["id"]; ?>"/>
     <input type="submit" value="Modifier"/>
+    <a href='index.php'>Retourner à l'accueil</a>
 </form>
