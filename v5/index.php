@@ -233,7 +233,7 @@
             }
             
             $titre = "Formulaire de modification d'un joueur";
-            $joueur = obtenir_joueur_equipe_par_joueur_ID($_REQUEST["idJoueur"]);
+            $joueur = obtenir_joueur_par_ID($_REQUEST["idJoueur"]);
             $equipes = obtenir_equipes();
 
             //est-ce que l'équipe possédant cet ID existe
@@ -283,7 +283,7 @@
             require("vues/form_recherche_joueurs.php");
             require_once("vues/footer.php");
             break;
-        case "RechercheJoueurs":
+            case "RechercheJoueurs":
             if (!isset($_REQUEST["recherche"])) {
                 require_once("vues/header.php");
                 require("vues/form_recherche_joueurs.php");
@@ -299,6 +299,21 @@
             }
             break;    
             
+            case "triEquipe":
+
+                if(!isset($_REQUEST["name"]))
+            {
+                
+                header("Location: index.php");
+                die();
+            }
+
+                $equipeTrier = trie_equipe($_REQUEST["name"]);
+                
+                require_once("vues/header.php");
+                require("vues/liste_equipes_tri.php");
+                require_once("vues/footer.php");
+
             
         default: 
             $titre = "Erreur 404";
@@ -343,4 +358,5 @@
 
         return $valide;
     }
+
 ?>

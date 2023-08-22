@@ -1,16 +1,18 @@
 <h1>Liste des équipes</h1>
 <table>
     <tr>
-        <th><a href='index.php?commande=triEquipe&name=nom'>Nom</a></th>
-        <th><a href='index.php?commande=triEquipe&name=ville'>Ville</a></th>
-        <th>Parametre</th>
+    <th><a href='index.php?commande=triEquipe&name=nom'>Nom</a></th>
+    <th><a href='index.php?commande=triEquipe&name=ville'>Ville</a></th>
+    <th>Parametre</th>
     </tr>
 <?php 
-    while($rangee = mysqli_fetch_assoc($equipes))
+    while($rangee = mysqli_fetch_assoc($equipeTrier))
     {
+        
         ?> 
         <tr>
             <td>
+                
                 <a href='index.php?commande=ListeJoueursParEquipe&idEquipe=<?= $rangee["id"] ?>'>
                 <?= $rangee["nom"] ?>  
                 </a>

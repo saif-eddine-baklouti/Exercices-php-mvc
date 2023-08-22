@@ -73,12 +73,12 @@
         return $resultats;
     }
 
-    function obtenir_joueur_equipe_par_joueur_ID($id_joueur)
+    function obtenir_joueur_par_ID($id_joueur)
     {
         global $connexion;
 
         //avant de continuer on teste la requête dans PHPMYADMIN
-        $requete = "SELECT joueur.id AS idJoueur, prenom, joueur.nom, nb_buts, nb_passes, id_equipe, equipe.nom AS nomEquipe, ville FROM joueur JOIN equipe ON id_equipe = equipe.id WHERE joueur.id = ".$id_joueur ;
+        $requete = "SELECT id, prenom, nom, nb_buts, nb_passes, id_equipe FROM joueur WHERE joueur.id = ".$id_joueur ;
 
         //exécuter la requête avec mysqli_query 
         $resultats = mysqli_query($connexion, $requete);
@@ -228,27 +228,33 @@
         return $test;
         
     }
-    function recherhce_joueurs($aChercher) {
+    function recherhce_joueurs($chain) {
         
         global $connexion;
-
-        $requete = "SELECT prenom, joueur.nom AS nomJoueur, ville, equipe.nom AS nomEquipe FROM joueur JOIN equipe ON id_equipe = equipe.id WHERE CONCAT(prenom ,'',joueur.nom)  LIKE '%?%' ";
-
+        
+        $aChercher = "%".$chain."%";
+        
+        $requete = "SELECT prenom, joueur.nom AS nomJoueur, ville, equipe.nom AS nomEquipe FROM joueur JOIN equipe ON id_equipe = equipe.id WHERE CONCAT(prenom,'',joueur.nom)  LIKE ? ";
+        
         $reqPrep = mysqli_prepare($connexion, $requete);
-
+        
+        
         if($reqPrep)
         {
+            echo "hello";
             //4. faire le lien entre les paramètres (?) et les valeurs envoyées
             mysqli_stmt_bind_param($reqPrep, "s", $aChercher);
 
-            //5. exécuter la requête préparée
+            // //5. exécuter la requête préparée
             $test = mysqli_stmt_execute($reqPrep);
 
             if($test)
-            {
+            { 
                 
-                return $test;
-            }
+                $resultats = mysqli_stmt_get_result($reqPrep) ;
+            
+                return $resultats;
+                }
             else 
                 return false;
         }
@@ -259,4 +265,53 @@
         
         return $resultats;
     }
+
+    function trie_equipe($order)  {
+        
+        global $connexion;
+
+        if(isset($order))
+    {
+        switch($order)
+        {
+            case "nom":
+                $ordre = "nom";
+                break;
+            case "ville":
+                $ordre = "ville";
+                break;
+        }
+    }
+
+    $requete = "SELECT nom, ville FROM equipe ORDER BY ?";
+
+    $reqPrep = mysqli_prepare($connexion, $requete);
+
+    if($reqPrep)
+        {
+            
+            //4. faire le lien entre les paramètres (?) et les valeurs envoyées
+            mysqli_stmt_bind_param($reqPrep, "s", $order);
+
+            // //5. exécuter la requête préparée
+            $test = mysqli_stmt_execute($reqPrep);
+
+            if($test)
+            { 
+                
+                $resultats = mysqli_stmt_get_result($reqPrep) ;
+            
+                return $resultats;
+                }
+            else 
+                return false;
+        }
+        else 
+            die("Erreur mysqli.");
+        //exécuter la requête avec mysqli_query 
+        $resultats = mysqli_query($connexion, $requete);
+        
+        return $resultats;
+        
+    };
 ?>

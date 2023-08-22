@@ -55,7 +55,7 @@
 <h1>Test de modifie_joueur($id)</h1>
 <?php 
 
-    $test = modifie_joueur("saif","baklouti", 55, 22, 11, 2);
+    $test = modifie_joueur("saif","baklddouti", 55, 222, 11, 2);
     var_dump($test);
 ?>    
 </body>

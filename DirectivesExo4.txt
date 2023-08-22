@@ -4,7 +4,7 @@ Exercice : 
 
 a) Créer le formulaire de modification de joueur, permettant de modifier un joueur en spécifiant l'équipe pour laquelle il joue à l'aide d'un select. Ce formulaire doit être populé avec les valeurs existantes dans la BD lors de l'arrivée sur le formulaire.
 
-Il faudra protéger ce formulaire contre les attaques par injection en utilisant les requêtes préparées!
+Il faudra protéger ce formulaire contre les attaques par injection en utilisant les requêtes préparées!  
 Il faudra aussi se protéger contre les attaques XSS.
 
 b) Créer le formulaire de recherche permettant de trouver un joueur par son prénom et / ou son nom. 

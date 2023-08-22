@@ -1,15 +1,25 @@
+<table>
+    <tr>
+        <th> Nom complet </th>
+        
+        <th> Equipe </th>
+        
 
+    </tr>
+    
 <?php 
     while($rangee = mysqli_fetch_assoc($resultatsRecherche))
     {
         ?> 
-        <li>
-            <?= $rangee["prenom"] ?> <?= ($rangee["nom"]) ?> 
-            <a href="index.php?commande=FormModifieJoueur&idJoueur=<?= htmlspecialchars($rangee["id"]) ?>"> Modifier ce joueur </a>
-        </li>
+            <tr>
+                <td><?= $rangee["prenom"] ?> <?= $rangee["nomJoueur"] ?> </td></br>
+                
+                <td><?= $rangee["nomEquipe"] ?> de <?= $rangee["ville"] ?></td>
+            </tr>
+            
         <?php 
     }
 ?>
-</ul>
-<!-- <a href='index.php?commande=FormAjoutJoueur'>Ajouter un joueur</a> -->
-<a href='index.php'>Retourner à l'accueil</a>
+
+</table>
+

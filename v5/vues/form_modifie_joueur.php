@@ -9,14 +9,14 @@
         while($rangee = mysqli_fetch_assoc($equipes))
         {
             if($joueur["id_equipe"] == $rangee["id"])
-                echo "<option selected value='" . $joueur["id_equipe"] . "'>" . htmlspecialchars($joueur["nomEquipe"]) . " de " . htmlspecialchars($joueur["ville"]) . "</option>";
+                echo "<option selected value='" . $joueur["id_equipe"] . "'>" . htmlspecialchars($rangee["nom"]) . " de " . htmlspecialchars($rangee["ville"]) . "</option>";
             else 
                 echo "<option value='" . $rangee["id"] . "'>" . htmlspecialchars($rangee["nom"]) . " de " . htmlspecialchars($rangee["ville"]) . "</option>";
         }
     ?>
     
     <input type="hidden" name="commande" value="ModifieJoueur"/>
-    <input type="hidden" name="id" value="<?= $joueur["idJoueur"]; ?>"/></br>
+    <input type="hidden" name="id" value="<?= $joueur["id"]; ?>"/></br>
     <input type="submit" value="Modifier"/>
     <a href='index.php'>Retourner à l'accueil</a>
     

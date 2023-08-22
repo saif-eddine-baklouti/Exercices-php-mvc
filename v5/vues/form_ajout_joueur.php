@@ -39,6 +39,8 @@
     ?>
     </select>
     <input type="hidden" name="commande" value="AjoutJoueur"/>
-    <input type="submit" value="Ajouter"/>
+    <input type="submit" value="Ajouter"/></br>
+    <a href='index.php?commande=ListeTousJoueurs'> Retourner à liste de tous les joueurs </a></br>
+    <a href='index.php'> Retourner à l'accueil </a>
 </form>
 <p><?php if(isset($_REQUEST["message"])) echo $_REQUEST["message"]; ?></p>
