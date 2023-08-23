@@ -1,5 +1,5 @@
 <?php
-if(isset($equipe))
+if(isset($equipe) )
 {
         $nomEquipe = $equipe["nom"];
         $villeEquipe = $equipe["ville"];
@@ -16,12 +16,16 @@ else
 }
 ?>
 <table>
-    <tr>
-    <th><a href='index.php?commande=triJoueur&name=prenom'>Prénom</a></th>
-        <th><a href='index.php?commande=triJoueur&name=nom'>Nom</a></th>
-        <th>Paramètre</th>
-    </tr>
-<?php 
+    <?php if (mysqli_num_rows($joueurs) != 0) { ?> 
+        <tr>
+            <th><a href='index.php?commande=triJoueur&name=prenom'>Prénom</a></th>
+            <th><a href='index.php?commande=triJoueur&name=nom'>Nom</a></th>
+            <th>Paramètre</th>
+        </tr>
+    <?php } 
+    
+    
+        
     while($rangee = mysqli_fetch_assoc($joueurs))
     {
         ?> 

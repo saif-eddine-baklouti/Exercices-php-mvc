@@ -131,6 +131,7 @@
                 return false;
         }
         else 
+            echo "heeee";
             die("Erreur mysqli.");
     }
 

@@ -32,7 +32,7 @@
         while($rangee = mysqli_fetch_assoc($equipes))
         {
             if($id_equipe == $rangee["id"])
-                echo "<option selected value='" . $rangee["id"] . "'>" . htmlspecialchars($rangee["nom"]) . " de " . htmlspecialchars($rangee["ville"]) . "</option>";
+                echo "<option selected value='" . htmlspecialchars($_REQUEST["id_equipe"]) . "'>" . htmlspecialchars($rangee["nom"]) . " de " . htmlspecialchars($rangee["ville"]) . "</option>";
             else 
                 echo "<option value='" . $rangee["id"] . "'>" . htmlspecialchars($rangee["nom"]) . " de " . htmlspecialchars($rangee["ville"]) . "</option>";
         }
@@ -41,6 +41,7 @@
     <input type="hidden" name="commande" value="AjoutJoueur"/>
     <input type="submit" value="Ajouter"/></br>
     <a href='index.php?commande=ListeTousJoueurs'> Retourner à liste de tous les joueurs </a></br>
-    <a href='index.php'> Retourner à l'accueil </a>
+    <a href='index.php?commande=ListeEquipes'>Retourner à la liste d'équipes </a></br>
+    <a href='index.php'> Retourner à l'accueil </a></br>
 </form>
 <p><?php if(isset($_REQUEST["message"])) echo $_REQUEST["message"]; ?></p>

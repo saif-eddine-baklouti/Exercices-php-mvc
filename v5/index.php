@@ -54,9 +54,18 @@
 
             if($equipe)
             {
-                require_once("vues/header.php");
-                require("vues/liste_joueurs.php");
-                require_once("vues/footer.php");
+                if (mysqli_num_rows($joueurs) != 0) {
+                    
+                    require_once("vues/header.php");
+                    require("vues/liste_joueurs.php");
+                    require_once("vues/footer.php");
+                }
+                else 
+                {
+                    require_once("vues/header.php");
+                    require("vues/liste_joueurs.php");
+                    require_once("vues/footer.php");
+                }
             }
             else 
                 header("Location: index.php?commande=ListeEquipes");
@@ -81,38 +90,51 @@
             break;
         case "AjoutEquipe":
             //valider le contenu des inputs
-            if(isset($_REQUEST["nom"], $_REQUEST["ville"], $_REQUEST["nb_victoires"]))
-            {
-                if(valide_equipe($_REQUEST["nom"], $_REQUEST["ville"], $_REQUEST["nb_victoires"]))
-                {
-                    //insérer
-                    $test = insere_equipe(htmlspecialchars($_REQUEST["nom"]), htmlspecialchars($_REQUEST["ville"]), htmlspecialchars($_REQUEST["nb_victoires"]));
-                    if($test !== false)
-                    {
-                        //l'ajout a fonctionné
-                        header("Location: index.php?commande=ListeEquipes");
-                        die();
+            $equipes = obtenir_equipes();
+            $nom = htmlspecialchars($_REQUEST["nom"]);
+            $ville = htmlspecialchars($_REQUEST["ville"]);
+            $nb_victoires = htmlspecialchars($_REQUEST["nb_victoires"]);
 
-                    }
-                    else 
-                    {
-                        echo "Erreur MySQL - ici c'est un bug";
-                        die();
-                    }
-                }
-                else 
-                {
-                    //le formulaire a été mal rempli
-                    header("Location: index.php?commande=FormAjoutEquipe");
+            while ($rangee = mysqli_fetch_assoc($equipes)) {
+                if ($rangee["nom"] ==  $nom ) {
+                    header("Location: index.php?commande=ListeEquipes&message=Cette équipe existe déjà dans la base de données.");
                     die();
                 }
             }
-            else
-            {
-                //on arrive pas du formulaire
-                header("Location: index.php");
-                die();
-            }
+                if (isset($nom, $ville, $nb_victoires))
+                {
+                    if(valide_equipe($nom, $ville, $nb_victoires))
+                    {
+                        //insérer
+                        $test = insere_equipe($nom, $ville, $nb_victoires);
+                        if($test !== false)
+                        {
+                            //l'ajout a fonctionné
+                            header("Location: index.php?commande=ListeEquipes");
+                            die();
+    
+                        }
+                        else 
+                        {
+                            echo "Erreur MySQL - ici c'est un bug";
+                            die();
+                        }
+                    }
+                    else 
+                    {
+                        //le formulaire a été mal rempli
+                        header("Location: index.php?commande=FormAjoutEquipe");
+                        die();
+                    }
+                }
+                else
+                {
+                    //on arrive pas du formulaire
+                    header("Location: index.php");
+                    die();
+                }
+            
+            
             break;
         case "SupprimeEquipe":
             if(!isset($_REQUEST["idEquipe"]) || !is_numeric($_REQUEST["idEquipe"]))
@@ -288,22 +310,22 @@
             require_once("vues/footer.php");
             break;
         case "RechercheJoueurs":
-            
-            if (!isset($_REQUEST["recherche"])) {
+                $chain = trim($_REQUEST["recherche"]);
+            if (!isset($chain)) {
                 require_once("vues/header.php");
                 require("vues/form_recherche_joueurs.php");
                 require_once("vues/footer.php");
             }
             else 
             {
-                $resultatsRecherche = recherhce_joueurs($_REQUEST["recherche"]);
-                require_once("vues/header.php");
-                require("vues/form_recherche_joueurs.php");
-                if ($_REQUEST["recherche"] && mysqli_num_rows($resultatsRecherche) != 0 ) {
-                    
+                $resultatsRecherche = recherhce_joueurs(htmlspecialchars($chain));
+                    require_once("vues/header.php");
+                    require("vues/form_recherche_joueurs.php");
+                if (mysqli_num_rows($resultatsRecherche) != 0 && $chain != "" ) 
+                {
                     require("vues/resultats_recherche_joueurs.php");
                 };
-                require_once("vues/footer.php");
+                    require_once("vues/footer.php");
             }
             break;    
             
