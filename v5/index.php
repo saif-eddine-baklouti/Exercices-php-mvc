@@ -190,11 +190,15 @@
             require_once("vues/footer.php");
             break;
         case "AjoutJoueur":
+
+            $joueurs = obtenir_joueurs();
+            
             //valider le contenu des inputs
+            
             if(isset($_REQUEST["prenom"], $_REQUEST["nom"], $_REQUEST["nb_buts"], $_REQUEST["nb_passes"], $_REQUEST["id_equipe"]))
             {
                 if(valide_joueur($_REQUEST["prenom"], $_REQUEST["nom"], $_REQUEST["nb_buts"], $_REQUEST["nb_passes"], $_REQUEST["id_equipe"]))
-                {
+                {   
                     //insérer
                     $test = insere_joueur(htmlspecialchars($_REQUEST["prenom"]), htmlspecialchars($_REQUEST["nom"]), htmlspecialchars($_REQUEST["nb_buts"]), htmlspecialchars($_REQUEST["nb_passes"]), htmlspecialchars($_REQUEST["id_equipe"]));
                     if($test !== false)
@@ -252,7 +256,7 @@
             
         case "ModifieJoueur":
             //valider le contenu des inputs
-            // var_dump(is_numeric($_REQUEST["id"] && is_numeric($_REQUEST["nb_buts"]) && is_numeric($_REQUEST["nb_passes"]) && is_numeric($_REQUEST["id_equipe"])));
+            
             if(isset( $_REQUEST["id"], $_REQUEST["prenom"], $_REQUEST["nom"], $_REQUEST["nb_buts"], $_REQUEST["nb_passes"], $_REQUEST["id_equipe"]) )
             {
                 if(valide_joueur($_REQUEST["prenom"], $_REQUEST["nom"], $_REQUEST["nb_buts"], $_REQUEST["nb_passes"], $_REQUEST["id_equipe"]))
@@ -283,7 +287,8 @@
             require("vues/form_recherche_joueurs.php");
             require_once("vues/footer.php");
             break;
-            case "RechercheJoueurs":
+        case "RechercheJoueurs":
+            
             if (!isset($_REQUEST["recherche"])) {
                 require_once("vues/header.php");
                 require("vues/form_recherche_joueurs.php");
@@ -294,25 +299,70 @@
                 $resultatsRecherche = recherhce_joueurs($_REQUEST["recherche"]);
                 require_once("vues/header.php");
                 require("vues/form_recherche_joueurs.php");
-                require("vues/resultats_recherche_joueurs.php");
+                if ($_REQUEST["recherche"] && mysqli_num_rows($resultatsRecherche) != 0 ) {
+                    
+                    require("vues/resultats_recherche_joueurs.php");
+                };
                 require_once("vues/footer.php");
             }
             break;    
             
-            case "triEquipe":
+        case "triEquipe":
 
                 if(!isset($_REQUEST["name"]))
             {
                 
+                require_once("vues/header.php");
+                require("vues/liste_equipe.php");
+                require_once("vues/footer.php");
+                break;
+            }
+            
+            $equipeTrier = trie_equipe($_REQUEST["name"]);
+                if ($equipeTrier) {
+                    require_once("vues/header.php");
+                    require("vues/liste_equipes_tri.php");
+                    require_once("vues/footer.php");
+                    break;
+                }
+
+        case "triJoueur":
+            if(!isset($_REQUEST["name"]))
+        {
+            
+            require_once("vues/header.php");
+            require("vues/liste_joueurs.php");
+            require_once("vues/footer.php");
+            break;
+        }
+        
+        $joueurTrier = trie_joueur($_REQUEST["name"]);
+            if ($joueurTrier) {
+                require_once("vues/header.php");
+                require("vues/liste_joueurs_tri.php");
+                require_once("vues/footer.php");
+                break;
+            }
+            
+        case "SupprimeJoueur":
+            if(!isset($_REQUEST["id"]) || !is_numeric($_REQUEST["id"]))
+            {
                 header("Location: index.php");
                 die();
             }
-
-                $equipeTrier = trie_equipe($_REQUEST["name"]);
-                
-                require_once("vues/header.php");
-                require("vues/liste_equipes_tri.php");
-                require_once("vues/footer.php");
+            
+            $test = supprime_joueur($_REQUEST["id"]);
+            if($test)
+            {
+                header("Location: index.php?commande=ListeJoueursParEquipe&idEquipe=".$_REQUEST['id_equipe']."&message=Suppression réussie.");
+                die();
+            }
+            else 
+            {
+                //si il y a un bug
+                header("Location: index.php?commande=ListeTousJoueurs&message=Échec de la suppression.");
+                die();
+            }        
 
             
         default: 

@@ -3,7 +3,7 @@
     <tr>
     <th><a href='index.php?commande=triEquipe&name=nom'>Nom</a></th>
     <th><a href='index.php?commande=triEquipe&name=ville'>Ville</a></th>
-    <th>Parametre</th>
+    <th>Paramètre</th>
     </tr>
 <?php 
     while($rangee = mysqli_fetch_assoc($equipeTrier))

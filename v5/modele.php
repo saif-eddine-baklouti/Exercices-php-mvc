@@ -212,13 +212,7 @@
             //5. exécuter la requête préparée
             $test = mysqli_stmt_execute($reqPrep);
 
-            if($test)
-            {
-                $id = mysqli_insert_id($connexion);
-                return $id;
-            }
-            else 
-                return false;
+            return $test;
         }
         else 
             die("Erreur mysqli.");
@@ -227,7 +221,7 @@
         
         return $test;
         
-    }
+    };
     function recherhce_joueurs($chain) {
         
         global $connexion;
@@ -241,7 +235,7 @@
         
         if($reqPrep)
         {
-            echo "hello";
+            
             //4. faire le lien entre les paramètres (?) et les valeurs envoyées
             mysqli_stmt_bind_param($reqPrep, "s", $aChercher);
 
@@ -282,36 +276,55 @@
                 break;
         }
     }
+    
 
-    $requete = "SELECT nom, ville FROM equipe ORDER BY ?";
+    $requete = "SELECT nom, ville, id FROM equipe ORDER BY $order";
 
-    $reqPrep = mysqli_prepare($connexion, $requete);
-
-    if($reqPrep)
-        {
-            
-            //4. faire le lien entre les paramètres (?) et les valeurs envoyées
-            mysqli_stmt_bind_param($reqPrep, "s", $order);
-
-            // //5. exécuter la requête préparée
-            $test = mysqli_stmt_execute($reqPrep);
-
-            if($test)
-            { 
-                
-                $resultats = mysqli_stmt_get_result($reqPrep) ;
-            
-                return $resultats;
-                }
-            else 
-                return false;
-        }
-        else 
-            die("Erreur mysqli.");
-        //exécuter la requête avec mysqli_query 
+    
         $resultats = mysqli_query($connexion, $requete);
         
         return $resultats;
-        
+
     };
+
+    function trie_joueur($order)  {
+        
+        global $connexion;
+
+        if(isset($order))
+    {
+        switch($order)
+        {
+            case "pernom":
+                $ordre = "pernom";
+                break;
+            case "nom":
+                $ordre = "nom";
+                break;
+        }
+    }
+    
+
+    $requete = "SELECT prenom, nom, id FROM joueur ORDER BY $order";
+
+    
+        $resultats = mysqli_query($connexion, $requete);
+        
+        return $resultats;
+
+    };
+
+    function supprime_joueur($id)
+    {
+        global $connexion;
+
+        //avant de continuer on teste la requête dans PHPMYADMIN
+        $requete = "DELETE FROM joueur WHERE id = " . $id;
+
+        //exécuter la requête avec mysqli_query 
+        $resultats = mysqli_query($connexion, $requete);
+
+        return $resultats;
+
+    }
 ?>
